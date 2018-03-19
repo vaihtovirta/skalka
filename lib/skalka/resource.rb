@@ -28,19 +28,6 @@ module Skalka
       }
     end
 
-    def nested_relationships(relationships)
-      Functions[
-        :map_values,
-        Functions[:fetch_data] >>
-        Functions[:flat_wrap] >>
-        Functions[
-          :map_array,
-          Functions[:accept_keys, [:id]] >>
-          Functions[:map_value, :id, ->(id) { id.to_i }]
-        ]
-      ][relationships]
-    end
-
     def fetch_link(included)
       Functions[:fetch_data] >>
         Functions[:flat_wrap] >>
@@ -52,6 +39,19 @@ module Skalka
       included.find do |included_resource|
         included_resource.values_at(:id, :type) == relationship.values_at(:id, :type)
       end
+    end
+
+    def nested_relationships(relationships)
+      Functions[
+        :map_values,
+        Functions[:fetch_data] >>
+        Functions[:flat_wrap] >>
+        Functions[
+          :map_array,
+          Functions[:accept_keys, [:id]] >>
+          Functions[:map_value, :id, ->(id) { id.to_i }]
+        ]
+      ][relationships]
     end
 
     def relationships(included, raw_relationships)
