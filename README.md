@@ -35,7 +35,7 @@ json = %{
       },
       "relationships": {
         "author": {
-          "data": {"id": "42", "type": "people"}
+          "data": { "id": "42", "type": "people" }
         },
         "comments": {
           "data": { "id": "55", "type": "comments" }
