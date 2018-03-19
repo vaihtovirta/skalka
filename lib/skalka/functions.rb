@@ -14,8 +14,6 @@ module Skalka
 
     import :parse, from: JSON, as: :parse_json
 
-    UNWRAP_GUARD = Functions[:guard, ->(list) { list.one? }, ->(list) { list.first }]
-
     module_function
 
     def fetch_data(item)
