@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Emil Shakirov"]
   spec.email         = ["me@emil.sh"]
 
-  spec.summary       = "JSON-API Parser"
-  spec.description   = "Simple JSON API Parser"
-  spec.homepage      = ""
+  spec.summary       = "The rolling pin for your json api responses."
+  spec.description   = "Simple JSON API parser/flattener"
+  spec.homepage      = "https://github.com/vaihtovirta/skalka.git"
   spec.license       = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|

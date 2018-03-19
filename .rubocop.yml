@@ -1,11 +1,6 @@
 AllCops:
   TargetRubyVersion: 2.5
   DisplayCopNames: true
-  Exclude:
-    - bin/**/*
-    - db/**/*
-    - vendor/**/*
-    - tmp/**/*
 
 RSpec/MultipleExpectations:
   Enabled: false
