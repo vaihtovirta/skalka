@@ -4,13 +4,10 @@ module Skalka
 
     module_function
 
-    def build_resource(item, parsed_json)
-      raw_relationships = item.fetch(:relationships, {})
-      included = parsed_json.fetch(:included, [])
-
+    def build(item, included)
       {
         **self[:deattribute][item],
-        **relationships(included, raw_relationships)
+        **self[:relationships].with(included)[item]
       }
     end
 
@@ -23,16 +20,19 @@ module Skalka
 
     def deattribute_with_nested(item)
       {
-        **deattribute(item),
-        **nested_relationships(item.fetch(:relationships, {}))
+        **self[:deattribute][item],
+        **NestedResource[:build][item]
       }
     end
 
-    def fetch_link(included)
-      Functions[:fetch_data] >>
-        Functions[:flat_wrap] >>
-        Functions[:map_array, self[:find_resource].with(included) >> self[:deattribute_with_nested]] >>
-        Functions[:unwrap]
+    def fetch_relationships(item)
+      item.fetch(:relationships, {})
+    end
+
+    def fetch_link_func(included)
+      Functions[:fetch_data] >> Functions[:map_or_pass][
+        self[:find_resource].with(included) >> self[:deattribute_with_nested]
+      ]
     end
 
     def find_resource(relationship, included)
@@ -41,21 +41,11 @@ module Skalka
       end
     end
 
-    def nested_relationships(relationships)
-      Functions[
-        :map_values,
-        Functions[:fetch_data] >>
-        Functions[:flat_wrap] >>
-        Functions[
-          :map_array,
-          Functions[:accept_keys, [:id]] >>
-          Functions[:map_value, :id, ->(id) { id.to_i }]
-        ]
-      ][relationships]
-    end
-
-    def relationships(included, raw_relationships)
-      Functions[:map_values, fetch_link(included)][raw_relationships]
+    def relationships(item, included)
+      (
+        self[:fetch_relationships] >>
+        Functions[:map_values, fetch_link_func(included)]
+      )[item]
     end
   end
 end

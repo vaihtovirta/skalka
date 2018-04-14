@@ -20,25 +20,25 @@ module Skalka
       item.fetch(:data, {})
     end
 
-    def flat_wrap(data)
-      [data].flatten
-    end
-
     def extra_fields(parsed_json)
       parsed_json.slice(*EXTRA_FIELDS)
     end
 
-    def extract(parsed_json)
+    def extract_resource(parsed_json)
+      included = parsed_json.fetch(:included, [])
+
       (
         self[:fetch_data] >>
-        self[:flat_wrap] >>
-        self[:map_array, Resource[:build_resource].with(parsed_json)] >>
-        self[:unwrap]
+        self[:map_or_pass][ Resource[:build].with(included) ]
       ).call(parsed_json)
     end
 
-    def unwrap(list)
-      Functions[:guard, ->(l) { l.one? }, ->(l) { l.first }][list]
+    def map_or_pass(func)
+      self[:is, Array, self[:map_array, func]] >> self[:is, Hash, func]
+    end
+
+    def parse_and_symbolize_keys(json)
+      (self[:parse_json] >> self[:deep_symbolize_keys]).call(json)
     end
   end
 end

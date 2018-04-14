@@ -1,0 +1,109 @@
+{
+  "data": {
+    "id": "3530",
+    "type": "ted-transfers",
+    "attributes": {
+      "user-id": 7,
+      "type": "TedTransfer",
+      "status": "scheduled",
+      "cancel-reason": null,
+      "reverse-reason": null,
+      "auth-code": "2018-03-08 15:07:54 +0000",
+      "date": "08/03/2018",
+      "value": "0.01",
+      "agency": "10400",
+      "account": "36773",
+      "updated-at": "2018-03-08T12:07:54.745-03:00",
+      "created-at": "2018-03-08T12:07:54.642-03:00",
+      "scheduled-at": "2018-03-08T12:07:54.725-03:00",
+      "ticketed-at": null,
+      "canceled-at": null,
+      "late-at": null,
+      "done-at": null,
+      "cops-updated-at": null,
+      "cops-user": null,
+      "reversed-at": null,
+      "ticket-auth-code": null,
+      "ticket-cancel-reason": null,
+      "errors": {},
+      "scheduled?": true,
+      "schedulable?": false,
+      "waiting?": false,
+      "done?": false,
+      "canceled?": false,
+      "ticketed?": false,
+      "late?": false,
+      "prewaiting?": false,
+      "reversed?": false,
+      "display-amount": "0.01",
+      "financial-institution-id": 1,
+      "liquidated?": false,
+      "liquidatable?": false,
+      "reviewable?": false,
+      "created-by": "BRUNO IMHOF",
+      "confirmed-by": "",
+      "canceled-by": "",
+      "scheduled-by": "Sistema",
+      "reversed-by": "",
+      "cancelable-by-user?": false,
+      "cancelable-by-manager?": true,
+      "transfer-reason-id": 1
+    },
+    "relationships": {
+      "favored": {
+        "data": {
+          "id": "166",
+          "type": "favored"
+        }
+      },
+      "transfer-reason": {
+        "data": {
+          "id": "1",
+          "type": "transfer-reason"
+        }
+      }
+    }
+  },
+  "included": [{
+      "id": "166",
+      "type": "favored",
+      "attributes": {
+        "poup": false,
+        "name": "Alexandro Rodrigues",
+        "agency": "3521",
+        "account": "9911-5",
+        "document": "02816536076",
+        "max-value": 2000,
+        "approved": false,
+        "errors": {}
+      },
+      "relationships": {
+        "bank": {
+          "data": {
+            "id": 180,
+            "title": "CAIXA ECONOMICA FEDERAL",
+            "code": "104",
+            "document": " 00.360.305/0001-04 ",
+            "status": false,
+            "site": " www.caixa.gov.br ",
+            "created_at": "2016-02-25T16:04:43.793-03:00",
+            "updated_at": "2018-01-16T15:26:57.210-02:00",
+            "active": true,
+            "short_name": "Caixa Econ. Federal                ",
+            "ispb": "360305"
+          }
+        }
+      }
+    },
+    {
+      "id": "1",
+      "type": "transfer-reason",
+      "attributes": {
+        "description": "Crédito em conta corrente",
+        "code": "01",
+        "created-at": "2016-02-25T16:04:43.881-03:00",
+        "updated-at": "2016-02-25T16:04:43.881-03:00"
+      }
+    }
+  ]
+}
