@@ -6,15 +6,8 @@ module Skalka
 
     def build(item, included)
       {
-        **self[:deattribute][item],
+        **Functions[:deattribute][item],
         **self[:relationships].with(included)[item]
-      }
-    end
-
-    def deattribute(item)
-      {
-        id: item[:id].to_i,
-        **item[:attributes]
       }
     end
 
@@ -31,7 +24,7 @@ module Skalka
 
     def fetch_link_func(included)
       Functions[:fetch_data] >> Functions[:map_or_pass][
-        self[:find_resource].with(included) >> self[:deattribute_with_nested]
+        self[:find_resource].with(included) >> NestedResource[:build]
       ]
     end
 

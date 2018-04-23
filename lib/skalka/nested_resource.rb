@@ -5,6 +5,13 @@ module Skalka
     module_function
 
     def build(item)
+      {
+        **Functions[:deattribute][item],
+        **attributes(item)
+      }
+    end
+
+    private def attributes(item)
       (
         Resource[:fetch_relationships] >>
         Functions[:map_values, fetch_and_process_data]

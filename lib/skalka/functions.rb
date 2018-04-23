@@ -16,6 +16,13 @@ module Skalka
 
     module_function
 
+    def deattribute(item)
+      {
+        id: item[:id].to_i,
+        **item[:attributes]
+      }
+    end
+
     def fetch_data(item)
       item.fetch(:data, {})
     end
