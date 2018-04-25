@@ -5,6 +5,8 @@ module Skalka
     module_function
 
     def build(item)
+      return {} if item.empty?
+
       {
         **Functions[:deattribute][item],
         **attributes(item)

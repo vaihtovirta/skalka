@@ -7,6 +7,22 @@ RSpec.describe Skalka do
     subject(:result) { described_class.call(json) }
     let(:first_resource) { result[:data].first }
 
+    context "when json is nil" do
+      let(:json) { nil }
+
+      it "returns empty data" do
+        expect { result }.to raise_error(described_class::NullJsonError, "JSON is nil")
+      end
+    end
+
+    context "when json is empty" do
+      let(:json) { "{}" }
+
+      it "returns empty data" do
+        expect(result.keys).to eq(%i[data])
+      end
+    end
+
     context "when resource has no relationships" do
       let(:json) { File.read("spec/fixtures/simple.json") }
 

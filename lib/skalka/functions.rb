@@ -17,6 +17,8 @@ module Skalka
     module_function
 
     def deattribute(item)
+      return {} if item.empty?
+
       {
         id: item[:id].to_i,
         **item[:attributes]

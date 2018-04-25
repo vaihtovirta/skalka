@@ -2,18 +2,6 @@ AllCops:
   TargetRubyVersion: 2.5
   DisplayCopNames: true
 
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/RepeatedDescription:
-  Enabled: false
-
-RSpec/MessageSpies:
-  EnforcedStyle: receive
-
 Style/AndOr:
   Enabled: false
 
@@ -57,7 +45,7 @@ Layout/AlignParameters:
     - with_first_parameter
     - with_fixed_indentation
 
-Lint/EndAlignment:
+Layout/EndAlignment:
   EnforcedStyleAlignWith: variable
   SupportedStylesAlignWith:
     - keyword
