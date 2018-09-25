@@ -6,6 +6,7 @@ RSpec.describe Skalka do
   describe ".call" do
     subject(:result) { described_class.call(json) }
     let(:first_resource) { result[:data].first }
+    let(:attributes) { first_resource[:attributes] }
 
     context "when json is nil" do
       let(:json) { nil }
@@ -26,19 +27,26 @@ RSpec.describe Skalka do
     context "when resource has no relationships" do
       let(:json) { File.read("spec/fixtures/simple.json") }
 
-      it "returns flat hash" do
+      it "returns parsed hash" do
         expect(result.keys).to eq(%i[data])
-        expect(first_resource.keys).to eq(%i[id title body created_at updated_at])
+        expect(first_resource.keys).to eq(%i[id type attributes])
+        expect(attributes.keys).to eq(%i[title body created_at updated_at])
       end
     end
 
     context "when resource has relationships" do
       let(:json) { File.read("spec/fixtures/with_relationships.json") }
+      let(:author) { attributes.dig(:author) }
+      let(:author_articles) { attributes.dig(:author, :attributes, :articles) }
+      let(:comment) { attributes.dig(:comments, 0, :attributes) }
 
-      it "returns flat hash" do
+      it "returns parsed hash" do
         expect(result.keys).to eq(%i[data links meta])
-        expect(first_resource.keys).to eq(%i[id title body created_at updated_at author comments])
-        expect(first_resource[:author][:articles]).to eq([{ id: 1 }])
+        expect(first_resource.keys).to eq(%i[id type attributes])
+        expect(attributes.keys).to eq(%i[title body created_at updated_at author comments])
+        expect(author.keys).to eq(%i[id type attributes])
+        expect(author_articles).to eq([{ id: "1" }])
+        expect(comment).to eq(content: "Ok")
       end
     end
 
@@ -55,11 +63,14 @@ RSpec.describe Skalka do
           cancelable-by-manager? transfer-reason-id favored transfer-reason
         ]
       end
+      let(:nested_resource) do
+        resource.dig(:attributes, :favored, :attributes, :bank)
+      end
 
-      it "returns flat hash" do
+      it "returns parsed hash" do
         expect(result.keys).to eq(%i[data])
-        expect(resource.keys).to eq(resource_keys)
-        expect(resource[:favored][:bank].keys)
+        expect(resource.keys).to eq(%i[id type attributes])
+        expect(nested_resource.keys)
           .to eq(%i[id title code document status site created_at updated_at active short_name ispb])
       end
     end

@@ -4,6 +4,7 @@ require "transproc/conditional"
 
 module Skalka
   module Functions
+    MAIN_FIELDS = %i[id type attributes].freeze
     EXTRA_FIELDS = %i[errors links meta].freeze
 
     extend Transproc::Registry
@@ -15,15 +16,6 @@ module Skalka
     import :parse, from: JSON, as: :parse_json
 
     module_function
-
-    def deattribute(item)
-      return {} if item.empty?
-
-      {
-        id: item[:id].to_i,
-        **item[:attributes]
-      }
-    end
 
     def fetch_data(item)
       item.fetch(:data, {})
@@ -48,6 +40,10 @@ module Skalka
 
     def parse_and_symbolize_keys(json)
       (self[:parse_json] >> self[:deep_symbolize_keys]).call(json)
+    end
+
+    def pick_main_attributes(item)
+      item.slice(*MAIN_FIELDS)
     end
   end
 end

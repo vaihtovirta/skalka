@@ -1,5 +1,7 @@
 # Skalka
 
+[![Build Status](https://travis-ci.com/vaihtovirta/skalka.svg?branch=master)](https://travis-ci.com/vaihtovirta/skalka)
+
 ![](https://i.imgur.com/rsw7QPg.png)
 
 ### Skalka — the rolling pin for your json api responses.
@@ -61,8 +63,8 @@ json = %{
       }
     ],
     "meta": {
-      "page": 1,
-      "count": 1
+      "page": "1",
+      "count": "1"
     }
   }
 }
@@ -71,14 +73,30 @@ Skalka.call(json)
 
 {
   data: {
-    id: "1", title: "Wise Thought",
-    body: "You can't blame gravity for falling in love.",
-    created_at: "2015-05-22T14:56:29.000Z",
-    updated_at: "2015-05-22T14:56:28.000Z",
-    author: [{ id: "42", name: "Albert Einstein", age: 76, gender: "male" }],
-    comments: [{ id: "55", content: "Meh" }]
+    id: "1",
+    type: "articles",
+    attributes: {
+      title: "Wise Thought",
+      body: "You can't blame gravity for falling in love.",
+      created_at: "2015-05-22T14:56:29.000Z",
+      updated_at: "2015-05-22T14:56:28.000Z",
+      author: {
+        id: "42",
+        type: "authors",
+        attributes: {
+          id: "42", name: "Albert Einstein", age: 76, gender: "male"
+        }
+      },
+      comments: [
+        {
+          id: "55",
+          type: "comments",
+          attributes: { id: "55", content: "Meh" }
+        }
+      ]
+    }
   },
-    meta: { page: 1, count: 1 }
+  meta: { page: "1", count: "1" }
 }
 ```
 
