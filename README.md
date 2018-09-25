@@ -1,5 +1,7 @@
 # Skalka
 
+[![Build Status](https://travis-ci.com/vaihtovirta/skalka.svg?branch=master)](https://travis-ci.com/vaihtovirta/skalka)
+
 ![](https://i.imgur.com/rsw7QPg.png)
 
 ### Skalka — the rolling pin for your json api responses.
